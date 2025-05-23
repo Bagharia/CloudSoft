@@ -19,3 +19,7 @@ transformers==4.51.3
 torchvision==0.22.0
 torch==2.7.0
 pillow==11.2.1
+flask>=2.3.0
+flask_cors>=4.0.0
+pymongo>=4.5.0
+python-dotenv>=1.0.0

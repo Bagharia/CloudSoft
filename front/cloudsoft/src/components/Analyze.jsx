@@ -22,7 +22,7 @@ const Analyze = () => {
                 </div>
                 <div className="">
                     <button 
-                    className="text-white border border-white rounded-md p-2"
+                    className="text-white border-white p-2 px-4 py-2 rounded-lg font-krona border"
                     onClick={() => navigate('/arme')}
                     >
                         Analyze

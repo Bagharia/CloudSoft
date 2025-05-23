@@ -6,14 +6,31 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    try {
+      const res = await fetch("http://localhost:5000//api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ pseudo, password }),
+      });
 
-    // ⚠️ Ici, ajoute ta logique d'authentification
+      const data = await res.json();
+
+      if (res.ok) {
+        console.log("Connecté :", data);
+        localStorage.setItem("user", JSON.stringify({ pseudo }));
+        navigate("/home");
+      } else {
+        alert(data.error || "Erreur de connexion");
+      }
+    } catch (err) {
+      console.error("Erreur réseau :", err);
+      alert("Erreur de connexion au serveur");
+    } 
     console.log("Connexion avec :", { pseudo, password });
-
-    // Exemple de redirection après connexion
-    navigate("/home");
   };
 
   return (
@@ -55,7 +72,6 @@ const Login = () => {
           </div>
 
           <button
-          onClick={handleSubmit}
             type="submit"
             className="w-full bg-blue-500 text-white py-4 text-lg rounded-xl hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300 transition ease-in-out duration-200"
           >

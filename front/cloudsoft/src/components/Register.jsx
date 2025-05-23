@@ -1,14 +1,11 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import React from "react";
 
 const Register = () => {
   const [formData, setFormData] = useState({
     pseudo: "",
-    first_name: "",
-    last_name: "",
     password: "",
-    age: "",
-    gender: "Male",
   });
 
   const navigate = useNavigate();
@@ -21,14 +18,32 @@ const Register = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // ⚠️ Ici tu peux envoyer formData à ton backend
-    console.log("Inscription:", formData);
+      try {
+        const res = await fetch("http://localhost:5000/api/auth/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
 
-    // Redirection exemple après inscription réussie
-    navigate("/home");
+      const data = await res.json();
+
+       if (res.ok) {
+        console.log("Inscription réussie :", data);
+        navigate("/login");
+      } else {
+        alert(data.error || "Erreur d'inscription");
+      }
+    } catch (err) {
+      console.error("Erreur réseau :", err);
+      alert("Erreur de connexion au serveur");
+    }
+      console.log("Inscription:", formData);
+
   };
 
   return (
@@ -40,8 +55,7 @@ const Register = () => {
 
         <form onSubmit={handleSubmit} className="space-y-6">
           {[
-            { label: "Prénom", name: "first_name", type: "text" },
-            { label: "Nom", name: "last_name", type: "text" },
+            { label: "Pseudo", name: "pseudo", type: "text" },
             { label: "Mot de passe", name: "password", type: "password" },
           ].map(({ label, name, type }) => (
             <div key={name} className="flex justify-between items-center">

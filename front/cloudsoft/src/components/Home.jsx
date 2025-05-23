@@ -73,20 +73,22 @@ const Home = () => {
                     </p>
                 )}
 
-                <button
+                <div>
+                    <button
                     onClick={goToDownload}
                     disabled={!preview}
                     className={`px-4 py-2 rounded-lg font-krona border ${
                         preview
                             ? "bg-black text-white border-white cursor-pointer"
-                            : "bg-gray-400 text-gray-200 border-gray-300 cursor-not-allowed"
+                            : " text-white border-gray-300 cursor-not-allowed"
                     }`}
-                >
-                    Download
-                </button>
+                    >
+                        Download
+                    </button>
+                </div>
             </div>
 
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3 mt-5">
                 <img src="/attention.svg" alt="attention" className="h-10 w-10 bg-white" />
                 <p className="font-krona text-[#C00F0C] text-sm">
                     Notre application est conçue exclusivement pour identifier des répliques d’armes de type airsoft.
